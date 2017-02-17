@@ -10,10 +10,17 @@
 
 //handlebar helpers are a way to register functions to run to dynamically create output ex/the date
 
+//SSH keys allow our computer to communicate with another server (our local machine and github, for example).  you check with command ls -al ~/.ssh in your root directory.  if there is no ssh key then use command ssh-keygen -t rsa -b 4096 -C '' to create one
+
+//a script is a command (like node server.js, deploying the server file) that we run from the terminal
+
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+const port = process.env.PORT || 3000;
+	//this is an obj that stores all of our environment variables in key/value pairs
+	//the heroku port env variable is not automatically set up so you need the or operator as a backup.  also allows app to run locally
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials')
@@ -100,8 +107,9 @@ app.get('/bad', (req, res) => {
 });
 
 //app.listen binds the application to a port 
-app.listen(3000, () => {
-	console.log('Server is up on port 3000');	
+app.listen(port, () => {
+	//this is an environment variable that allows the actual port to be a dynamic number.  When deployed to Heroku you don't have to worry about the fact that the port number changes every time
+	console.log(`Server is up on port ${port}`); 	
 });
 
 
