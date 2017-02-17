@@ -14,6 +14,8 @@
 
 //a script is a command (like node server.js, deploying the server file) that we run from the terminal
 
+//In github, the origin is the default remote so no need to specify a remote unless you want to change that.  The origin remote points to the github repository. When you use heroku another remote is created for heroku.  When we deploy to the heroku git repository heroku sees that then takes the changes and deploys them to the web....when we run "heroku create" in bash it does all of that.  "git push heroku" "heroku open"
+
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
@@ -47,9 +49,9 @@ app.use((req, res, next) => {
 	//sometimes you don't want to call next
 });
 
-app.use((req, res, next) => {
+/*/app.use((req, res, next) => {
 	res.render('maintenance.hbs');
-});
+}); /*/
 
 app.use(express.static(__dirname + '/public'));
 	//this is how you call middleware
@@ -98,6 +100,14 @@ app.get('/about', (req, res) => {
 		pageTitle: 'About Page',
 		currentYear: new Date().getFullYear()
 	});
+});
+
+app.get('/projects', (req, res) => {
+		
+	res.render('projects.hbs', {
+		pageTitle: 'Projects Page',
+		projectMessage: 'This is a project whoo hoo'
+	});	
 });
 
 app.get('/bad', (req, res) => {
